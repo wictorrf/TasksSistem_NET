@@ -16,6 +16,8 @@ namespace listTask_Api.Data.Map
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(1000);
             builder.Property(x => x.status).IsRequired();
+            builder.Property(x => x.UsuarioId);
+            builder.HasOne(x => x.Usuario);
         }
     }
 }

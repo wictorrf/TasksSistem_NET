@@ -12,5 +12,8 @@ namespace listTask_Api.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public StatusTarefa status { get; set; }
+        public int UsuarioId { get; set; }
+
+        public virtual UsuarioModel Usuario { get; set; }
     }
 }
