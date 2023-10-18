@@ -18,13 +18,16 @@ namespace listTask_Api.Repositories
         }
         public async Task<TarefaModel> BuscarPorId(int id)
         {
-            return await _dbcontext.Tarefas.FirstOrDefaultAsync(x => x.id == id);
+            return await _dbcontext.Tarefas
+            .Include(x => x.Usuario)
+            .FirstOrDefaultAsync(x => x.id == id);
         }
 
         public async Task<List<TarefaModel>> BuscarTodasTarefas()
         {
-            return await _dbcontext.Tarefas.ToListAsync();
-
+            return await _dbcontext.Tarefas
+            .Include(x => x.Usuario)
+            .ToListAsync();
         }
         public async Task<TarefaModel> Adicionar(TarefaModel tarefa)
         {
@@ -39,6 +42,7 @@ namespace listTask_Api.Repositories
             if (tarefaPorId == null) throw new Exception($"A tarefa com o id: {id} não foi encontrado!");
             tarefaPorId.Nome = tarefa.Nome;
             tarefaPorId.Descricao = tarefa.Descricao;
+            tarefaPorId.status = tarefa.status;
             _dbcontext.Tarefas.Update(tarefaPorId);
             await _dbcontext.SaveChangesAsync();
             return tarefaPorId;
